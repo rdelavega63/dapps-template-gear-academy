@@ -7,6 +7,8 @@ publish.workspace = true
 [dependencies]
 gstd.workspace = true
 tamagotchi-interaction-io.workspace = true
+parity-scale-codec = { version = "3", default-features = false }
+scale-info = { version = "2", default-features = false }
 
 [build-dependencies]
 gear-wasm-builder.workspace = true
