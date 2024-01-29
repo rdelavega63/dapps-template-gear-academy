@@ -1,6 +1,9 @@
 use gtest::{Program, System};
-use tamagotchi_interaction::Tamagotchi;
-use tamagotchi_interaction::TmgAction;
+use tamagotchi_interaction_io::{Tamagotchi, TmgAction};
+
+const FILL_PER_FEED: u64 = 1000;
+const FILL_PER_ENTERTAINMENT: u64 = 1000;
+const FILL_PER_SLEEP: u64 = 1000;
 
 #[test]
 fn interaction_test() {
@@ -26,22 +29,25 @@ fn interaction_test() {
 
     let initial_block_height = system.block_height() as u64;
 
+    // Feed Test
     let feed_res = program.send(2, TmgAction::Feed);
     assert!(!feed_res.main_failed(), "Failed to feed the tamagotchi");
     let tamagotchi_state: Tamagotchi = program.read_state(()).unwrap();
-    assert_eq!(tamagotchi_state.last_fed_block, initial_block_height);
-    assert!(tamagotchi_state.fed_level > 1000);
+    assert_eq!(tamagotchi_state.fed_block, initial_block_height);
+    assert_eq!(tamagotchi_state.fed, 1000 + FILL_PER_FEED); // Assuming the initial value is 1000
 
+    // Entertain Test
     let entertain_res = program.send(2, TmgAction::Entertain);
     assert!(!entertain_res.main_failed(), "Failed to entertain the tamagotchi");
     let tamagotchi_state: Tamagotchi = program.read_state(()).unwrap();
-    assert_eq!(tamagotchi_state.last_entertained_block, initial_block_height);
-    assert!(tamagotchi_state.entertained_level > 1000);
+    assert_eq!(tamagotchi_state.entertained_block, initial_block_height);
+    assert_eq!(tamagotchi_state.entertained, 1000 + FILL_PER_ENTERTAINMENT); // Assuming the initial value is 1000
 
+    // Sleep Test
     let sleep_res = program.send(2, TmgAction::Sleep);
     assert!(!sleep_res.main_failed(), "Failed to put the tamagotchi to sleep");
     let tamagotchi_state: Tamagotchi = program.read_state(()).unwrap();
-    assert_eq!(tamagotchi_state.last_slept_block, initial_block_height);
-    assert!(tamagotchi_state.slept_level > 1000);
+    assert_eq!(tamagotchi_state.slept_block, initial_block_height);
+    assert_eq!(tamagotchi_state.slept, 1000 + FILL_PER_SLEEP); // Assuming the initial value is 1000
 
 }
