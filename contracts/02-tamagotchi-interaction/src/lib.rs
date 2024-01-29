@@ -113,7 +113,7 @@ fn update_levels(tamagotchi: &mut Tamagotchi, current_block_height: u64) {
 extern fn state() {
     let tamagotchi = unsafe {
         TAMAGOTCHI_STATE
-            .take()
+            .as_ref()
             .expect("The contract is not initialized")
     };
 
