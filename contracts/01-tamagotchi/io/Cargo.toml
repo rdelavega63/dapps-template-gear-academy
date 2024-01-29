@@ -3,6 +3,8 @@ name = "tamagotchi-io"
 version.workspace = true
 edition.workspace = true
 publish.workspace = true
+parity-scale-codec = { version = "3", default-features = false }
+scale-info = { version = "2", default-features = false }
 
 [dependencies]
 gmeta.workspace = true
