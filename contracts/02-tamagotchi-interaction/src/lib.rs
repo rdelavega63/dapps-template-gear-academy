@@ -84,18 +84,24 @@ fn save_tamagotchi_state(tamagotchi: Tamagotchi) {
 }
 
 fn update_levels(tamagotchi: &mut Tamagotchi, current_block_height: u64) {
+    // Calculate the number of blocks since the last time the Tamagotchi was fed, entertained, and slept
     let blocks_since_last_fed = current_block_height - tamagotchi.fed_block;
     let blocks_since_last_entertained = current_block_height - tamagotchi.entertained_block;
     let blocks_since_last_slept = current_block_height - tamagotchi.slept_block;
 
+    // Calculate how much hunger, boredom, and tiredness the Tamagotchi has accumulated since the last time it was fed,
+    // entertained, and slept
     let hunger = blocks_since_last_fed * HUNGER_PER_BLOCK;
     let boredom = blocks_since_last_entertained * BOREDOM_PER_BLOCK;
     let tiredness = blocks_since_last_slept * ENERGY_PER_BLOCK;
 
+    // Subtract the accumulated hunger, boredom, and tiredness from the Tamagotchi's current fed, entertained,
+    // and slept levels
     tamagotchi.fed = tamagotchi.fed.saturating_sub(hunger);
     tamagotchi.entertained = tamagotchi.entertained.saturating_sub(boredom);
     tamagotchi.slept = tamagotchi.slept.saturating_sub(tiredness);
 
+    // Check if the Tamagotchi is hungry, bored, or tired and send a message to the Tamagotchi's owner in each case
     if tamagotchi.fed == 0 {
         msg::reply("Your tamagotchi is hungry!", 0).expect("Failed to send reply");
     }
@@ -108,10 +114,14 @@ fn update_levels(tamagotchi: &mut Tamagotchi, current_block_height: u64) {
         msg::reply("Your tamagotchi is tired!", 0).expect("Failed to send reply");
     }
 
+    // Check if the Tamagotchi is in a critical state (i.e., it is hungry, bored, and tired at the same time)
+    // and send a message to the Tamagotchi's owner
     if tamagotchi.fed == 0 || tamagotchi.entertained == 0 || tamagotchi.slept == 0 {
         msg::reply("Your tamagotchi is in a critical state!", 0).expect("Failed to send reply");
     }
 
+    // Check if the Tamagotchi is dead (i.e., it is hungry, bored, and tired at the same time) and send a message
+    // to the Tamagotchi's owner
     if tamagotchi.fed == 0 && tamagotchi.entertained == 0 && tamagotchi.slept == 0 {
         msg::reply("Your tamagotchi is dead!", 0).expect("Failed to send reply");
     }
@@ -121,7 +131,7 @@ fn update_levels(tamagotchi: &mut Tamagotchi, current_block_height: u64) {
 extern fn state() {
     let tamagotchi = unsafe {
         TAMAGOTCHI_STATE
-            .as_ref()
+            .take()
             .expect("The contract is not initialized")
     };
 
