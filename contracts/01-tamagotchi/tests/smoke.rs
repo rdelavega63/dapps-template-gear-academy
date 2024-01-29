@@ -1,5 +1,5 @@
 use gtest::{System, Program};
-use tamagotchi::Tamagotchi;
+use tamagotchi_io::{Tamagotchi};
 
 #[test]
 fn smoke_test() {

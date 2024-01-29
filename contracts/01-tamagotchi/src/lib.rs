@@ -3,18 +3,7 @@
 #[allow(unused_imports)]
 use gstd::prelude::*;
 use gstd::{exec, msg, debug};
-
-#[derive(Encode, Decode)]
-pub struct Tamagotchi {
-    pub name: String,
-    pub date_of_birth: u64,
-}
-
-#[derive(Encode, Decode)]
-pub enum TmgAction {
-    Name,
-    Age,
-}
+use tamagotchi_io::{Tamagotchi, TmgAction};
 
 static mut TAMAGOTCHI_STATE: Option<Tamagotchi> = None;
 
