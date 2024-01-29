@@ -1,9 +1,9 @@
 #![no_std]
 
 use codec::{Decode, Encode};
-use scale_info::TypeInfo;
 use gmeta::{In, InOut, Metadata, Out};
 use gstd::{prelude::*, ActorId};
+use scale_info::TypeInfo;
 
 #[derive(Default, Encode, Decode, TypeInfo, Clone)]
 #[codec(crate = gstd::codec)]

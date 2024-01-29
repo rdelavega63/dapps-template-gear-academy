@@ -2,7 +2,7 @@
 
 #[allow(unused_imports)]
 use gstd::prelude::*;
-use gstd::{exec, msg, debug};
+use gstd::{debug, exec, msg};
 use tamagotchi_interaction_io::{Tamagotchi, TmgAction};
 
 static mut TAMAGOTCHI_STATE: Option<Tamagotchi> = None;
@@ -35,7 +35,10 @@ extern fn init() {
 
     save_tamagotchi_state(tamagotchi);
 
-    debug!("Tamagotchi initialized with name: {:?}, date of birth: {:?}", name, date_of_birth);
+    debug!(
+        "Tamagotchi initialized with name: {:?}, date of birth: {:?}",
+        name, date_of_birth
+    );
 }
 
 #[no_mangle]
@@ -54,24 +57,26 @@ extern fn handle() {
     match action {
         TmgAction::Name => {
             msg::reply(&tamagotchi.name, 0).expect("Failed to send reply");
-        },
+        }
         TmgAction::Age => {
             let current_timestamp = exec::block_timestamp();
             let age_in_milliseconds = current_timestamp - tamagotchi.date_of_birth;
             msg::reply(&age_in_milliseconds, 0).expect("Failed to send reply");
-        },
+        }
         TmgAction::Feed => {
             tamagotchi.fed_block = current_block_height;
             tamagotchi.fed = tamagotchi.fed.saturating_add(FILL_PER_FEED);
-        },
+        }
         TmgAction::Entertain => {
             tamagotchi.entertained_block = current_block_height;
-            tamagotchi.entertained = tamagotchi.entertained.saturating_add(FILL_PER_ENTERTAINMENT);
-        },
+            tamagotchi.entertained = tamagotchi
+                .entertained
+                .saturating_add(FILL_PER_ENTERTAINMENT);
+        }
         TmgAction::Sleep => {
             tamagotchi.slept_block = current_block_height;
             tamagotchi.slept = tamagotchi.slept.saturating_add(FILL_PER_SLEEP);
-        },
+        }
     }
 
     save_tamagotchi_state(tamagotchi.clone());

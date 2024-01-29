@@ -38,16 +38,21 @@ fn interaction_test() {
 
     // Entertain Test
     let entertain_res = program.send(2, TmgAction::Entertain);
-    assert!(!entertain_res.main_failed(), "Failed to entertain the tamagotchi");
+    assert!(
+        !entertain_res.main_failed(),
+        "Failed to entertain the tamagotchi"
+    );
     let tamagotchi_state: Tamagotchi = program.read_state(()).unwrap();
     assert_eq!(tamagotchi_state.entertained_block, initial_block_height);
     assert_eq!(tamagotchi_state.entertained, 1000 + FILL_PER_ENTERTAINMENT); // Assuming the initial value is 1000
 
     // Sleep Test
     let sleep_res = program.send(2, TmgAction::Sleep);
-    assert!(!sleep_res.main_failed(), "Failed to put the tamagotchi to sleep");
+    assert!(
+        !sleep_res.main_failed(),
+        "Failed to put the tamagotchi to sleep"
+    );
     let tamagotchi_state: Tamagotchi = program.read_state(()).unwrap();
     assert_eq!(tamagotchi_state.slept_block, initial_block_height);
     assert_eq!(tamagotchi_state.slept, 1000 + FILL_PER_SLEEP); // Assuming the initial value is 1000
-
 }
