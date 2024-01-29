@@ -9,8 +9,7 @@ static mut TAMAGOTCHI_STATE: Option<Tamagotchi> = None;
 
 #[no_mangle]
 extern fn init() {
-    let name_bytes = msg::load_bytes().expect("Invalid initial name");
-    let name = String::from_utf8(name_bytes).expect("Invalid UTF-8");
+    let name: String = msg::load().expect("Invalid initial name");
 
     let date_of_birth = exec::block_timestamp();
 
