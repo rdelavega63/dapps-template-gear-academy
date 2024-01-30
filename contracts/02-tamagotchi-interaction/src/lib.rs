@@ -23,7 +23,7 @@ extern fn init() {
     let tamagotchi = Tamagotchi {
         name,
         date_of_birth,
-        owner: msg::source(),
+        owner: Default::default(),
         fed: 1000,
         fed_block: 0,
         entertained: 1000,
