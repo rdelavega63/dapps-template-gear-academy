@@ -1,8 +1,8 @@
 #![no_std]
 
 use gmeta::{In, InOut, Metadata, Out};
-use gstd::ActorId;
 use gstd::prelude::*;
+use gstd::ActorId;
 
 #[derive(Default, Encode, Decode, TypeInfo, Clone)]
 #[codec(crate = gstd::codec)]

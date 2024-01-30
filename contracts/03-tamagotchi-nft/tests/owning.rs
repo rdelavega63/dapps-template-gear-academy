@@ -1,5 +1,5 @@
-use gtest::{Program, System};
 use gstd::ActorId;
+use gtest::{Program, System};
 use tamagotchi_nft_io::{Tamagotchi, TmgAction};
 
 const FILL_PER_FEED: u64 = 1000;
@@ -8,6 +8,7 @@ const FILL_PER_SLEEP: u64 = 1000;
 
 const NEW_OWNER: ActorId = ActorId::new([0x01; 32]);
 const APPROVED_ACCOUNT: ActorId = ActorId::new([0x02; 32]);
+const NON_OWNER_BYTES: [u8; 32] = [0x03; 32];
 
 #[test]
 fn owning_test() {
@@ -17,7 +18,7 @@ fn owning_test() {
     let program = Program::current(&system);
 
     let name = "Tammy";
-    let init_res = program.send(0, name.to_string());
+    let init_res = program.send(2, name.to_string());
     assert!(!init_res.main_failed(), "Failed to initialize the contract");
 
     let tamagotchi_state: Tamagotchi = program.read_state(()).unwrap();
@@ -42,34 +43,70 @@ fn owning_test() {
 
     // Entertain Test
     let entertain_res = program.send(2, TmgAction::Entertain);
-    assert!(!entertain_res.main_failed(), "Failed to entertain the tamagotchi");
+    assert!(
+        !entertain_res.main_failed(),
+        "Failed to entertain the tamagotchi"
+    );
     let tamagotchi_state: Tamagotchi = program.read_state(()).unwrap();
     assert_eq!(tamagotchi_state.entertained_block, initial_block_height);
     assert_eq!(tamagotchi_state.entertained, 1000 + FILL_PER_ENTERTAINMENT); // Assuming the initial value is 1000
 
     // Sleep Test
     let sleep_res = program.send(2, TmgAction::Sleep);
-    assert!(!sleep_res.main_failed(), "Failed to put the tamagotchi to sleep");
+    assert!(
+        !sleep_res.main_failed(),
+        "Failed to put the tamagotchi to sleep"
+    );
     let tamagotchi_state: Tamagotchi = program.read_state(()).unwrap();
+    println!("OLD Tamagotchi state owner: {:?}", tamagotchi_state.owner);
     assert_eq!(tamagotchi_state.slept_block, initial_block_height);
     assert_eq!(tamagotchi_state.slept, 1000 + FILL_PER_SLEEP); // Assuming the initial value is 1000
 
-    // Transfer Test
-    let transfer_res = program.send(2, TmgAction::Transfer(NEW_OWNER));
-    assert!(!transfer_res.main_failed(), "Failed to transfer the tamagotchi");
-    let tamagotchi_state: Tamagotchi = program.read_state(()).unwrap();
-    println!("Tamagotchi state owner: {:?}", tamagotchi_state.owner);
-    assert_eq!(tamagotchi_state.owner, NEW_OWNER);
-
     // Approve Test
     let approve_res = program.send(2, TmgAction::Approve(APPROVED_ACCOUNT));
-    assert!(!approve_res.main_failed(), "Failed to approve account for the tamagotchi");
+    assert!(
+        !approve_res.main_failed(),
+        "Failed to approve account for the tamagotchi"
+    );
     let tamagotchi_state: Tamagotchi = program.read_state(()).unwrap();
     assert_eq!(tamagotchi_state.approved_account, Some(APPROVED_ACCOUNT));
 
     // RevokeApproval Test
     let revoke_approval_res = program.send(2, TmgAction::RevokeApproval);
-    assert!(!revoke_approval_res.main_failed(), "Failed to revoke approval for the tamagotchi");
+    assert!(
+        !revoke_approval_res.main_failed(),
+        "Failed to revoke approval for the tamagotchi"
+    );
     let tamagotchi_state: Tamagotchi = program.read_state(()).unwrap();
     assert_eq!(tamagotchi_state.approved_account, None);
+
+    // Transfer Test by Non-Owner
+    let transfer_res = program.send(NON_OWNER_BYTES, TmgAction::Transfer(NEW_OWNER));
+    assert!(
+        transfer_res.main_failed(),
+        "Non-owner should not be able to transfer the tamagotchi"
+    );
+
+    // Approve Test by Non-Owner
+    let approve_res = program.send(NON_OWNER_BYTES, TmgAction::Approve(APPROVED_ACCOUNT));
+    assert!(
+        approve_res.main_failed(),
+        "Non-owner should not be able to approve account for the tamagotchi"
+    );
+
+    // RevokeApproval Test by Non-Owner
+    let revoke_approval_res = program.send(NON_OWNER_BYTES, TmgAction::RevokeApproval);
+    assert!(
+        revoke_approval_res.main_failed(),
+        "Non-owner should not be able to revoke approval for the tamagotchi"
+    );
+
+    // Transfer Test
+    let transfer_res = program.send(2, TmgAction::Transfer(NEW_OWNER));
+    assert!(
+        !transfer_res.main_failed(),
+        "Failed to transfer the tamagotchi"
+    );
+    let tamagotchi_state: Tamagotchi = program.read_state(()).unwrap();
+    assert_eq!(tamagotchi_state.owner, NEW_OWNER);
 }
