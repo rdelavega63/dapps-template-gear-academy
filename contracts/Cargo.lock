@@ -5696,6 +5696,8 @@ dependencies = [
  "gear-wasm-builder",
  "gstd",
  "gtest",
+ "parity-scale-codec",
+ "scale-info",
  "tamagotchi-interaction-io",
 ]
 
@@ -5705,6 +5707,8 @@ version = "0.3.3"
 dependencies = [
  "gmeta",
  "gstd",
+ "parity-scale-codec",
+ "scale-info",
 ]
 
 [[package]]
