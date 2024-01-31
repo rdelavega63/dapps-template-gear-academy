@@ -4,10 +4,13 @@ version.workspace = true
 edition.workspace = true
 publish.workspace = true
 
-# TODO: 1️⃣ Add the `sharded-fungible-token-io` and `store-io` crates as dependencies
 [dependencies]
 gstd.workspace = true
 tamagotchi-shop-io.workspace = true
+parity-scale-codec = { version = "3", default-features = false }
+scale-info = { version = "2", default-features = false }
+sharded-fungible-token-io.workspace = true
+store-io.workspace = true
 
 [build-dependencies]
 gear-wasm-builder.workspace = true
