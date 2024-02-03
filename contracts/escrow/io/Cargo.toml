@@ -1,0 +1,13 @@
+[package]
+name = "escrow-io"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+parity-scale-codec = { version = "3", default-features = false }
+scale-info = { version = "2", default-features = false }
+gstd.workspace = true
+gmeta.workspace = true
+
+[build-dependencies]
+gear-wasm-builder = { git = "https://github.com/gear-tech/gear.git", tag = "v1.0.2", features = ["metawasm", "wasm-opt"] }

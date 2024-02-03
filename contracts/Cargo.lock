@@ -765,6 +765,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "codespan-reporting"
+version = "0.11.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3538270d33cc669650c4b093848450d380def10c331d38c768e34cac80576e6e"
+dependencies = [
+ "termcolor",
+ "unicode-width",
+]
+
+[[package]]
 name = "colored"
 version = "2.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1097,6 +1107,50 @@ dependencies = [
  "rand_core 0.6.4",
  "subtle-ng",
  "zeroize",
+]
+
+[[package]]
+name = "cxx"
+version = "1.0.112"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "58ab30434ea0ff6aa640a08dda5284026a366d47565496fd40b6cbfbdd7e31a2"
+dependencies = [
+ "cc",
+ "cxxbridge-flags",
+ "cxxbridge-macro",
+ "link-cplusplus",
+]
+
+[[package]]
+name = "cxx-build"
+version = "1.0.112"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b649d7dfae8268450d53d109388b337b9352c7cba1fc10db4a1bc23c3dc189fb"
+dependencies = [
+ "cc",
+ "codespan-reporting",
+ "once_cell",
+ "proc-macro2",
+ "quote",
+ "scratch",
+ "syn 2.0.37",
+]
+
+[[package]]
+name = "cxxbridge-flags"
+version = "1.0.112"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "42281b20eba5218c539295c667c18e2f50211bb11902419194c6ed1ae808e547"
+
+[[package]]
+name = "cxxbridge-macro"
+version = "1.0.112"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b45506e3c66512b0a65d291a6b452128b7b1dd9841e20d1e151addbd2c00ea50"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.37",
 ]
 
 [[package]]
@@ -1511,6 +1565,50 @@ checksum = "aa68f1b12764fab894d2755d2518754e71b4fd80ecfb822714a1206c2aab39bf"
 dependencies = [
  "cc",
  "libc",
+]
+
+[[package]]
+name = "escrow"
+version = "0.3.3"
+dependencies = [
+ "escrow-io",
+ "gear-wasm-builder",
+ "gstd",
+ "gtest",
+ "parity-scale-codec",
+ "scale-info",
+]
+
+[[package]]
+name = "escrow-factory"
+version = "0.3.3"
+dependencies = [
+ "escrow-factory-io",
+ "escrow-io",
+ "gear-wasm-builder",
+ "gstd",
+ "gtest",
+ "tokio",
+]
+
+[[package]]
+name = "escrow-factory-io"
+version = "0.1.0"
+dependencies = [
+ "escrow-io",
+ "gmeta",
+ "gstd",
+]
+
+[[package]]
+name = "escrow-io"
+version = "0.1.0"
+dependencies = [
+ "gear-wasm-builder",
+ "gmeta",
+ "gstd",
+ "parity-scale-codec",
+ "scale-info",
 ]
 
 [[package]]
@@ -2201,6 +2299,7 @@ dependencies = [
  "regex",
  "thiserror",
  "toml",
+ "wasm-opt",
  "wasmparser-nostd",
  "which",
 ]
@@ -2295,8 +2394,19 @@ source = "git+https://github.com/gear-tech/gear?tag=v1.0.2#d02d306f97c2d60c1a878
 dependencies = [
  "blake2-rfc",
  "derive_more",
+ "gmeta-codegen",
  "hex",
  "scale-info",
+]
+
+[[package]]
+name = "gmeta-codegen"
+version = "1.0.2"
+source = "git+https://github.com/gear-tech/gear?tag=v1.0.2#d02d306f97c2d60c1a8786366a56d8c02264f4e1"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.37",
 ]
 
 [[package]]
@@ -3118,6 +3228,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3db8d6ba2cec9eacc40e6e8ccc98931840301f1006e95647ceb2dd5c3aa06f7c"
 dependencies = [
  "libsecp256k1-core",
+]
+
+[[package]]
+name = "link-cplusplus"
+version = "1.0.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9d240c6f7e1ba3a28b0249f774e6a9dd0175054b52dfbb61b16eb8505c3785c9"
+dependencies = [
+ "cc",
 ]
 
 [[package]]
@@ -4477,6 +4596,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "94143f37725109f92c262ed2cf5e59bce7498c01bcc1502d7b9afe439a4e9f49"
 
 [[package]]
+name = "scratch"
+version = "1.0.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a3cf7c11c38cb994f3d40e8a8cde3bbd1f72a435e4c49e85d6553d8312306152"
+
+[[package]]
 name = "sct"
 version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -5503,6 +5628,25 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "73473c0e59e6d5812c5dfe2a064a6444949f089e20eec9a2e5506596494e4623"
 
 [[package]]
+name = "strum"
+version = "0.24.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "063e6045c0e62079840579a7e47a355ae92f60eb74daaf156fb1e84ba164e63f"
+
+[[package]]
+name = "strum_macros"
+version = "0.24.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1e385be0d24f186b4ce2f9982191e7101bb737312ad61c1f2f984f34bcf85d59"
+dependencies = [
+ "heck",
+ "proc-macro2",
+ "quote",
+ "rustversion",
+ "syn 1.0.109",
+]
+
+[[package]]
 name = "substrate-bip39"
 version = "0.4.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -5661,6 +5805,10 @@ dependencies = [
  "gear-wasm-builder",
  "gstd",
  "gtest",
+ "parity-scale-codec",
+ "scale-info",
+ "sharded-fungible-token-io",
+ "store-io",
  "tamagotchi-army-io",
 ]
 
@@ -5670,6 +5818,10 @@ version = "0.3.3"
 dependencies = [
  "gmeta",
  "gstd",
+ "parity-scale-codec",
+ "scale-info",
+ "sharded-fungible-token-io",
+ "store-io",
 ]
 
 [[package]]
@@ -6355,6 +6507,47 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "aa1dafb3e60065305741e83db35c6c2584bb3725b692b5b66148a38d72ace6cd"
 dependencies = [
  "parity-wasm 0.45.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "wasm-opt"
+version = "0.111.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "84a303793cbc01fb96551badfc7367db6007396bba6bac97936b3c8b6f7fdb41"
+dependencies = [
+ "anyhow",
+ "libc",
+ "strum",
+ "strum_macros",
+ "tempfile",
+ "thiserror",
+ "wasm-opt-cxx-sys",
+ "wasm-opt-sys",
+]
+
+[[package]]
+name = "wasm-opt-cxx-sys"
+version = "0.111.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d9c9deb56f8a9f2ec177b3bd642a8205621835944ed5da55f2388ef216aca5a4"
+dependencies = [
+ "anyhow",
+ "cxx",
+ "cxx-build",
+ "wasm-opt-sys",
+]
+
+[[package]]
+name = "wasm-opt-sys"
+version = "0.111.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4432e28b542738a9776cedf92e8a99d8991c7b4667ee2c7ccddfb479dd2856a7"
+dependencies = [
+ "anyhow",
+ "cc",
+ "cxx",
+ "cxx-build",
+ "regex",
 ]
 
 [[package]]
