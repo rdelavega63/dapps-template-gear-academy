@@ -5734,6 +5734,32 @@ dependencies = [
 ]
 
 [[package]]
+name = "tamagotchi-quest"
+version = "0.3.3"
+dependencies = [
+ "gear-wasm-builder",
+ "gstd",
+ "gtest",
+ "parity-scale-codec",
+ "scale-info",
+ "sharded-fungible-token-io",
+ "store-io",
+ "tamagotchi-quest-io",
+]
+
+[[package]]
+name = "tamagotchi-quest-io"
+version = "0.3.3"
+dependencies = [
+ "gmeta",
+ "gstd",
+ "parity-scale-codec",
+ "scale-info",
+ "sharded-fungible-token-io",
+ "store-io",
+]
+
+[[package]]
 name = "tamagotchi-shop"
 version = "0.3.3"
 dependencies = [

@@ -1,0 +1,13 @@
+[package]
+name = "tamagotchi-quest-io"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+
+[dependencies]
+gmeta.workspace = true
+gstd.workspace = true
+parity-scale-codec = { version = "3", default-features = false }
+scale-info = { version = "2", default-features = false }
+sharded-fungible-token-io.workspace = true
+store-io.workspace = true
